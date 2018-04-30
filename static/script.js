@@ -2,6 +2,14 @@ let btn = document.getElementById('check');
 let input = document.getElementById('input');
 let output = document.getElementById('output');
 
+function getValues(obj) {
+    v = []
+    for (key in obj) {
+        v.push(obj[key])
+    }
+    return v;
+}
+
 btn.addEventListener('click', function() {
 
     let httpRequest = new XMLHttpRequest();
@@ -9,7 +17,7 @@ btn.addEventListener('click', function() {
         if (httpRequest.readyState != 4) return;
         let wormholes = JSON.parse(httpRequest.responseText);
         let world_sigs = input.value.split('\n').map(s => s.split('\t')[0].substr(0, 3));
-        let scout_sigs = wormholes.map(x => x.signatureId);
+        let scout_sigs = getValues(wormholes).map(x => x.signatureID);
         let comp_array = [];
         for (let sig of world_sigs) {
             if (!scout_sigs.includes(sig)) {
